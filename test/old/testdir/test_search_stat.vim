@@ -16,27 +16,27 @@ func Test_search_stat()
   " but setting @/ should also work (even 'n' nor 'N' was executed)
   " recompute the count when the last position is different.
   call assert_equal(
-    \ #{current: 1, exact_match: 1, total: 40, incomplete: 0, maxcount: 99},
+    \ #{current: 1, exact_match: 1, total: 40, incomplete: 0, maxcount: 999},
     \ searchcount(#{pattern: 'foo'}))
   call assert_equal(
-    \ #{current: 0, exact_match: 0, total: 10, incomplete: 0, maxcount: 99},
+    \ #{current: 0, exact_match: 0, total: 10, incomplete: 0, maxcount: 999},
     \ searchcount(#{pattern: 'fooooobar'}))
   call assert_equal(
-    \ #{current: 0, exact_match: 0, total: 10, incomplete: 0, maxcount: 99},
+    \ #{current: 0, exact_match: 0, total: 10, incomplete: 0, maxcount: 999},
     \ searchcount(#{pattern: 'fooooobar', pos: [2, 1, 0]}))
   call assert_equal(
-    \ #{current: 1, exact_match: 1, total: 10, incomplete: 0, maxcount: 99},
+    \ #{current: 1, exact_match: 1, total: 10, incomplete: 0, maxcount: 999},
     \ searchcount(#{pattern: 'fooooobar', pos: [3, 1, 0]}))
   " on last char of match
   call assert_equal(
-    \ #{current: 1, exact_match: 1, total: 10, incomplete: 0, maxcount: 99},
+    \ #{current: 1, exact_match: 1, total: 10, incomplete: 0, maxcount: 999},
     \ searchcount(#{pattern: 'fooooobar', pos: [3, 9, 0]}))
   " on char after match
   call assert_equal(
-    \ #{current: 1, exact_match: 0, total: 10, incomplete: 0, maxcount: 99},
+    \ #{current: 1, exact_match: 0, total: 10, incomplete: 0, maxcount: 999},
     \ searchcount(#{pattern: 'fooooobar', pos: [3, 10, 0]}))
   call assert_equal(
-    \ #{current: 1, exact_match: 0, total: 10, incomplete: 0, maxcount: 99},
+    \ #{current: 1, exact_match: 0, total: 10, incomplete: 0, maxcount: 999},
     \ searchcount(#{pattern: 'fooooobar', pos: [4, 1, 0]}))
   call assert_equal(
     \ #{current: 1, exact_match: 0, total: 2, incomplete: 2, maxcount: 1},
@@ -53,7 +53,7 @@ func Test_search_stat()
   let pat = escape(@/, '()*?'). '\s\+'
   call assert_match(pat .. stat, g:a)
   call assert_equal(
-    \ #{current: 2, exact_match: 1, total: 50, incomplete: 0, maxcount: 99},
+    \ #{current: 2, exact_match: 1, total: 50, incomplete: 0, maxcount: 999},
     \ searchcount(#{recompute: 0}))
   " didn't get added to message history
   call assert_equal(messages_before, execute('messages'))
@@ -64,7 +64,7 @@ func Test_search_stat()
   let stat = '\[50/50\]'
   call assert_match(pat .. stat, g:a)
   call assert_equal(
-    \ #{current: 50, exact_match: 1, total: 50, incomplete: 0, maxcount: 99},
+    \ #{current: 50, exact_match: 1, total: 50, incomplete: 0, maxcount: 999},
     \ searchcount(#{recompute: 0}))
 
   " No search stat
@@ -75,10 +75,10 @@ func Test_search_stat()
   call assert_notmatch(pat .. stat, g:a)
   " n does not update search stat
   call assert_equal(
-    \ #{current: 50, exact_match: 1, total: 50, incomplete: 0, maxcount: 99},
+    \ #{current: 50, exact_match: 1, total: 50, incomplete: 0, maxcount: 999},
     \ searchcount(#{recompute: 0}))
   call assert_equal(
-    \ #{current: 2, exact_match: 1, total: 50, incomplete: 0, maxcount: 99},
+    \ #{current: 2, exact_match: 1, total: 50, incomplete: 0, maxcount: 999},
     \ searchcount(#{recompute: v:true}))
   set shortmess-=S
 
@@ -90,7 +90,7 @@ func Test_search_stat()
   let stat = '\[>99/>99\]'
   call assert_match(pat .. stat, g:a)
   call assert_equal(
-    \ #{current: 100, exact_match: 0, total: 100, incomplete: 2, maxcount: 99},
+    \ #{current: 100, exact_match: 0, total: 100, incomplete: 2, maxcount: 999},
     \ searchcount(#{recompute: 0}))
   call assert_equal(
     \ #{current: 272, exact_match: 1, total: 280, incomplete: 0, maxcount: 0},
@@ -103,7 +103,7 @@ func Test_search_stat()
   let stat = 'W \[1/>99\]'
   call assert_match(pat .. stat, g:a)
   call assert_equal(
-    \ #{current: 1, exact_match: 1, total: 100, incomplete: 2, maxcount: 99},
+    \ #{current: 1, exact_match: 1, total: 100, incomplete: 2, maxcount: 999},
     \ searchcount(#{recompute: 0}))
   call assert_equal(
     \ #{current: 1, exact_match: 1, total: 280, incomplete: 0, maxcount: 0},
